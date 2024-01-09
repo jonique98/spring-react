@@ -7,11 +7,11 @@ interface Props {
 	label: string;
 	type: 'text' | 'password';
 	value: string;
-	setValue: Dispatch<SetStateAction<string>>;
+	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 	placeholder: string;
 	error: boolean;
 
-	icon?: string;
+	icon?: 'eye-light-off-icon' | 'eye-light-on-icon' | 'expand-right-light-icon';
 	onButtonClick?: () => void;
 
 	message?: string;
@@ -23,30 +23,24 @@ interface Props {
 
 const InputBox = forwardRef<HTMLInputElement, Props>((props: Props, ref) => {
 
-	//         properties 			//
+	//         state:properties 			//
 	const { label, type, value,  placeholder, error, icon, message} = props;
-	const { setValue , onButtonClick, onKeyDown} = props;
+	const { onChange , onButtonClick, onKeyDown} = props;
 
-	// .       event handlers 			//
-	const onChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
-		const { value } = event.target;
-		setValue(value);
-	}
-
-	//       키 이벤트 처리 함수 			//
+	//  event handler: 키 이벤트 처리 함수 			//
 	const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
 		if(!onKeyDown) return;
-		onKeyDownHandler(event);
+		onKeyDown(event);
 	}
 
 	//       render: Input Box 컴포넌트 			//
 	return (
 		<div className='inputbox'>
-			<div className='inputbox-label'>{'비밀번호*'}</div>
+			<div className='inputbox-label'>{label}</div>
 			<div className={error ? 'inputbox-container-error' : 'inputbox-container'}>
-				<input  ref={ref} type = {type} className='input' placeholder={placeholder} value={value} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+				<input  ref={ref} type = {type} className='input' placeholder={placeholder} value={value} onChange={onChange} onKeyDown={onKeyDownHandler}/>
 				{onButtonClick !== undefined && (
-				<div className='icon-button'>
+				<div className='icon-button' onClick={onButtonClick}>
 					{icon !== undefined && (
 					<div className={`icon ${icon}`}></div>
 					)}

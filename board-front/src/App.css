@@ -134,3 +134,26 @@
 .search-light-icon{
 	background-image: url(assets/image/search-light.png);
 }
+
+.black-large-full-button {
+	width: 100%;
+	height: 48px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border-radius: 46px;
+	background-color: rgba(0, 0, 0, 1);
+
+	color: white;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 140%;
+
+	cursor: pointer;
+}
+
+.black-large-full-button:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+} 

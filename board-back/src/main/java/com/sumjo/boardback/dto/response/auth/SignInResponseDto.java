@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.sumjo.boardback.common.ResponseCode;
+import com.sumjo.boardback.common.ResponseMessage;
 import com.sumjo.boardback.dto.response.ResponseDto;
 
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class SignInResponseDto extends ResponseDto{
 	private int expirationTime;
 
 	private SignInResponseDto(String token) {
-		super(ResponseCode.SUCCESS, ResponseCode.SUCCESS);
+		super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
 		this.token = token;
 		this.expirationTime = 3600;
 	}
@@ -26,7 +27,7 @@ public class SignInResponseDto extends ResponseDto{
 	}
 
 	public static ResponseEntity<ResponseDto> signInFailed(){
-		ResponseDto result = new ResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseCode.SIGN_IN_FAIL);
+		ResponseDto result = new ResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseMessage.SIGN_IN_FAIL);
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
 	}
 }
