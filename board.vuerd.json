@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -589.1692708333334,
-    "scrollLeft": -467,
+    "scrollTop": -308.16927083333337,
+    "scrollLeft": 0,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -19,7 +19,7 @@
     },
     "database": "MySQL",
     "databaseName": "",
-    "canvasType": "ERD",
+    "canvasType": "@vuerd/builtin-sql-ddl",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -212,7 +212,7 @@
           "active": false,
           "left": 41.25,
           "top": 650.75,
-          "zIndex": 2,
+          "zIndex": 1,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F8FF00"
@@ -407,13 +407,36 @@
               "widthDefault": 60
             },
             "id": "56589513-7a10-4372-907c-27618f8c2130"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "99d28025-cd1a-4c49-bbfb-58b7442b56dd"
           }
         ],
         "ui": {
           "active": false,
           "left": 590.25,
           "top": 612,
-          "zIndex": 5,
+          "zIndex": 11,
           "widthName": 60,
           "widthComment": 60,
           "color": "#0041FF"
@@ -476,7 +499,7 @@
           "active": false,
           "left": 1246.2161,
           "top": 682.1692,
-          "zIndex": 12,
+          "zIndex": 5,
           "widthName": 60,
           "widthComment": 60
         },
@@ -538,7 +561,7 @@
           "active": false,
           "left": 245.2995,
           "top": 409.4193,
-          "zIndex": 14,
+          "zIndex": 6,
           "widthName": 60,
           "widthComment": 72.88896179199219,
           "color": "#00FF0B"
@@ -670,7 +693,7 @@
           "active": false,
           "left": 277.7995,
           "top": 920.6693,
-          "zIndex": 10,
+          "zIndex": 4,
           "widthName": 60,
           "widthComment": 61.64396667480469,
           "color": "#00FF1E"
@@ -779,7 +802,7 @@
           "active": false,
           "left": 816.0495,
           "top": 1099.9193,
-          "zIndex": 8,
+          "zIndex": 3,
           "widthName": 60,
           "widthComment": 60,
           "color": "#E91E63"
@@ -805,7 +828,7 @@
             "5a569142-a81c-460b-8a07-f960cfb68f51"
           ],
           "x": 1081.1706237792969,
-          "y": 728.5,
+          "y": 738.75,
           "direction": "right"
         },
         "end": {
@@ -840,7 +863,7 @@
             "56589513-7a10-4372-907c-27618f8c2130"
           ],
           "x": 590.25,
-          "y": 728.5,
+          "y": 738.75,
           "direction": "left"
         },
         "constraintName": "fk_user_to_board",
@@ -935,7 +958,7 @@
             "5a569142-a81c-460b-8a07-f960cfb68f51"
           ],
           "x": 835.7103118896484,
-          "y": 845,
+          "y": 865.5,
           "direction": "bottom"
         },
         "end": {
