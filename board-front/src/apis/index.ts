@@ -25,6 +25,16 @@ export const signInReguest = async (requestBody: SignInRequestDto) => {
 }
 
 export const signUpReguest = async (requestBody: SignUpRequestDto) => {
-
+	const result = await axios.post(SIGN_UP_URL, requestBody)
+		.then(response => {
+			const responseBody : ResponseDto = response.data;
+			return responseBody;
+		})
+		.catch(error => {
+			if (!error.response.data) return null;
+			const responseBody : ResponseDto = error.response.data;
+			return responseBody;
+		})
+	return result;
 }
 
