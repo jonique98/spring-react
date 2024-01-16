@@ -14,12 +14,13 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 	
@@ -41,6 +42,4 @@ public class AuthController {
 		ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
 		return response;
 	}
-	
-	
 }
