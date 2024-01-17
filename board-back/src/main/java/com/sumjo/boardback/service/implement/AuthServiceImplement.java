@@ -53,7 +53,6 @@ public class AuthServiceImplement implements AuthService{
 			userRepository.save(UserEntity);
 
 		} catch (Exception exception) {
-			System.out.println("여기 에러");
 			exception.printStackTrace();
 			return ResponseDto.databaseError();
 		}

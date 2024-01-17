@@ -3,7 +3,7 @@ import './style.css'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
-import { useBoardStore, userLoginUserStore } from 'stores';
+import { useBoardStore, useLoginUserStore } from 'stores';
 
 //	   component: 헤더 컴포넌트        //
 export default function Header() {
@@ -11,7 +11,7 @@ export default function Header() {
 	// 			state: path 상태        //
 	const { pathname } = useLocation();
 	// 			state: 로그인 유저 상태        //
-	const {loginUser, setLoginUser, resetLoginUser} = userLoginUserStore();
+	const {loginUser, setLoginUser, resetLoginUser} = useLoginUserStore();
 	//				state: cookie 상태		//
 	const [cookie, setCookie] = useCookies();
 
@@ -81,6 +81,11 @@ export default function Header() {
 			setStatus(true);
 		}, [searchWord]);
 
+		//		effect : 로그인 유저 상태 변경 될때마다 실행되는 함수 	  //
+		useEffect(() => {
+			setLogin(loginUser !== null);
+		} ,[loginUser]);
+
 
 		//	   render: 검색 버튼 렌더링        //
 		if (!status) {
@@ -120,6 +125,7 @@ export default function Header() {
 		//				event handler: 로그아웃 버튼 클릭 이벤트 처리 함수		//
 		const onSignOutButtonClickHandler = () => {
 			resetLoginUser();
+			setCookie('accessToken', '', { path: MAIN_PATH(), expires: new Date() });
 			navigate(MAIN_PATH());
 		}
 

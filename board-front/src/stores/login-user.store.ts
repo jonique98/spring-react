@@ -7,10 +7,10 @@ interface LoginUserStore {
 	resetLoginUser: () => void;
 };
 
-const userLoginUserStore = create<LoginUserStore>((set) => ({
+const useLoginUserStore = create<LoginUserStore>((set) => ({
 	loginUser: null,
 	setLoginUser: (loginUser) => set(state => ({...state, loginUser })),
 	resetLoginUser: () => set(state => ({...state, loginUser: null})),
 }));
 
-export default userLoginUserStore;
+export default useLoginUserStore;
