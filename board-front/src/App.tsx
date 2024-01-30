@@ -46,7 +46,7 @@ function App() {
     setLoginUser(loginUser);
   }
 
-  //          effect: accesstoken cookie 가ㅂㅅ이 변경될 때 마다 실행할 함수			  //
+  //          effect: accesstoken cookie 값이 변경될 때 마다 실행할 함수			  //
   useEffect(() => {
     if (!cookies.accessToken) {
       resetLoginUser();
@@ -76,7 +76,7 @@ function App() {
           <Route path={BOARD_DETAIL_PATH(':boardNumber')} element={<BoardDetail/>}/>
           <Route path={BOARD_UPDATE_PATH('boardNumber')} element={<BoardUpdate/>} />
         </Route> 
-      <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Route>
     </Routes>
   );

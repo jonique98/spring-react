@@ -127,7 +127,7 @@ export default function Authentication() {
 						</div>
 						<InputBox ref={emailRef} label = '이메일주소' type = 'text' placeholder='이메일 주소를 입력해주세요.' error={error} value={email} onChange={onEmailChangeHandler} onKeyDown={onEmailKeyDownHandler}/>
 						<InputBox ref={passwordRef} label = '패스워드' type = {passwordType} placeholder='비밀번호를 입력해주세요.' error={error} value={password} onChange={onPasswordChangeHandler} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} onKeyDown={onPassworKeyDownHandler}/>
-					</div>
+						</div>
 					<div className='auth-card-bottom'>
 						{error && 
 						<div className='auth-sign-in-error-box'>

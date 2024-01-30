@@ -36,4 +36,9 @@ public class FileController {
 		Resource resource = fileService.getImage(fileName);
 		return resource;
 	}
+
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
 }

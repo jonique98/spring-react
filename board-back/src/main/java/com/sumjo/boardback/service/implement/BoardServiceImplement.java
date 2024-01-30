@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.sumjo.boardback.dto.request.board.PostboardRequestDto;
 import com.sumjo.boardback.dto.response.ResponseDto;
+import com.sumjo.boardback.dto.response.board.GetBoardResponseDto;
 import com.sumjo.boardback.dto.response.board.PostBoardResponseDto;
+import com.sumjo.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.sumjo.boardback.entity.BoardEntity;
+import com.sumjo.boardback.entity.FavoriteEntity;
 import com.sumjo.boardback.entity.ImageEntity;
 import com.sumjo.boardback.repository.BoardRepository;
+import com.sumjo.boardback.repository.FavoriteRepository;
 import com.sumjo.boardback.repository.ImageRepository;
 import com.sumjo.boardback.repository.UserRepository;
+import com.sumjo.boardback.repository.resultSet.GetBoardResultSet;
 import com.sumjo.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,31 @@ public class BoardServiceImplement implements BoardService{
 	private final UserRepository userRepository;
 	private final ImageRepository imageRepository;
 	private final BoardRepository boardRepository;
+	private final FavoriteRepository favoriteRepository;
+
+	@Override
+	public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
+
+		GetBoardResultSet resultSet = null;
+		List<ImageEntity> imageEntities = new ArrayList<>();
+
+		try {
+			resultSet = boardRepository.getBoard(boardNumber);
+			if (resultSet == null) return GetBoardResponseDto.noExistBoard();
+
+			imageEntities = imageRepository.findByBoardNumber(boardNumber);
+
+			BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+			boardEntity.increaseViewCount();
+			boardRepository.save(boardEntity);
+			
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return ResponseDto.databaseError();
+		}
+
+		return GetBoardResponseDto.success(resultSet, imageEntities);
+	}
 
 	@Override
 	public ResponseEntity<? super PostBoardResponseDto> postBoard(PostboardRequestDto dto, String email) {
@@ -55,6 +85,38 @@ public class BoardServiceImplement implements BoardService{
 		}
 
 		return PostBoardResponseDto.success();
+	}
+
+	@Override
+	public ResponseEntity<? super PutFavoriteResponseDto> PutFavorite(Integer boardNumber, String email) {
+
+		try {
+			
+			boolean existedUser = userRepository.existsByEmail(email);
+			if (!existedUser) return PutFavoriteResponseDto.noExistUser();
+
+			BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+			if (boardEntity == null) return PutFavoriteResponseDto.noExistBoard();
+
+			FavoriteEntity favoriteEntity = favoriteRepository.findByBoardNumberAndUserEmail(boardNumber, email);
+			if (favoriteEntity == null) {
+				favoriteEntity = new FavoriteEntity(email, boardNumber);
+				favoriteRepository.save(favoriteEntity);
+				boardEntity.increaseFavoriteCount();
+			} 
+			else {
+				favoriteRepository.delete(favoriteEntity);
+				boardEntity.decreaseFavoriteCount();
+			}
+
+			boardRepository.save(boardEntity);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseDto.databaseError();
+		}
+		
+		return PutFavoriteResponseDto.success();
 	}
 	
 }
