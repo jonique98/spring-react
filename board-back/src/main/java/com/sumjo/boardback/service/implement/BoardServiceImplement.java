@@ -6,19 +6,25 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.sumjo.boardback.dto.request.board.PostCommentRequestDto;
 import com.sumjo.boardback.dto.request.board.PostboardRequestDto;
 import com.sumjo.boardback.dto.response.ResponseDto;
 import com.sumjo.boardback.dto.response.board.GetBoardResponseDto;
+import com.sumjo.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.sumjo.boardback.dto.response.board.PostBoardResponseDto;
+import com.sumjo.boardback.dto.response.board.PostCommentResponseDto;
 import com.sumjo.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.sumjo.boardback.entity.BoardEntity;
+import com.sumjo.boardback.entity.CommentEntity;
 import com.sumjo.boardback.entity.FavoriteEntity;
 import com.sumjo.boardback.entity.ImageEntity;
 import com.sumjo.boardback.repository.BoardRepository;
+import com.sumjo.boardback.repository.CommentRepository;
 import com.sumjo.boardback.repository.FavoriteRepository;
 import com.sumjo.boardback.repository.ImageRepository;
 import com.sumjo.boardback.repository.UserRepository;
 import com.sumjo.boardback.repository.resultSet.GetBoardResultSet;
+import com.sumjo.boardback.repository.resultSet.GetFavoriteListResultSet;
 import com.sumjo.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +37,7 @@ public class BoardServiceImplement implements BoardService{
 	private final ImageRepository imageRepository;
 	private final BoardRepository boardRepository;
 	private final FavoriteRepository favoriteRepository;
+	private final CommentRepository commentRepository;
 
 	@Override
 	public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
@@ -54,6 +61,25 @@ public class BoardServiceImplement implements BoardService{
 		}
 
 		return GetBoardResponseDto.success(resultSet, imageEntities);
+	}
+
+	@Override
+	public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
+
+
+		List<GetFavoriteListResultSet> resultSets = new ArrayList<>();
+
+		try {
+			boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+			if (!existedBoard) return GetFavoriteListResponseDto.noExistBoard();
+			
+			resultSets = favoriteRepository.getFavoriteList(boardNumber);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseDto.databaseError();
+		}
+
+		return GetFavoriteListResponseDto.success(resultSets);
 	}
 
 	@Override
@@ -85,6 +111,30 @@ public class BoardServiceImplement implements BoardService{
 		}
 
 		return PostBoardResponseDto.success();
+	}
+
+	@Override
+	public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email) {
+		try {
+
+			BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+			if (boardEntity == null) return PostCommentResponseDto.noExistBoard();
+
+			boolean existedUser = userRepository.existsByEmail(email);
+			if (!existedUser) return PostCommentResponseDto.noExistUser();
+
+			CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
+			commentRepository.save(commentEntity);
+
+			boardEntity.increaseCommentCount();
+			boardRepository.save(boardEntity);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseDto.databaseError();
+		}
+
+		return PostCommentResponseDto.success();
 	}
 
 	@Override
