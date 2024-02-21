@@ -74,7 +74,7 @@ function App() {
         <Route path={BOARD_PATH()}>
           <Route path={BOARD_WRITE_PATH()} element={<BoardWrite/>}/>
           <Route path={BOARD_DETAIL_PATH(':boardNumber')} element={<BoardDetail/>}/>
-          <Route path={BOARD_UPDATE_PATH('boardNumber')} element={<BoardUpdate/>} />
+          <Route path={BOARD_UPDATE_PATH(':boardNumber')} element={<BoardUpdate/>} />
         </Route> 
         <Route path="*" element={<h1>Not Found</h1>} />
       </Route>

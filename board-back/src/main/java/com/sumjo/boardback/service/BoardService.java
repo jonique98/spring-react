@@ -6,6 +6,7 @@ import com.sumjo.boardback.dto.request.board.PostCommentRequestDto;
 import com.sumjo.boardback.dto.request.board.PostboardRequestDto;
 import com.sumjo.boardback.dto.response.board.GetBoardResponseDto;
 import com.sumjo.boardback.dto.response.board.GetFavoriteListResponseDto;
+import com.sumjo.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.sumjo.boardback.dto.response.board.PostBoardResponseDto;
 import com.sumjo.boardback.dto.response.board.PostCommentResponseDto;
 import com.sumjo.boardback.dto.response.board.PutFavoriteResponseDto;
@@ -17,4 +18,6 @@ public interface BoardService {
 
 	ResponseEntity<? super PutFavoriteResponseDto> PutFavorite(Integer boardNumber, String email);
 	ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber);
+
+	ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
 }
