@@ -13,7 +13,7 @@ database : Mysql
 
 ### ERD
 
-<img>
+<img src = "https://github.com/jonique98/spring-react/assets/104954561/149a127a-c397-49a8-933f-ad172ee867db">
 
 <details>
 <summary>BOARD</summary>
