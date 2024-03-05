@@ -338,6 +338,7 @@ Http Status - 400 (Bad Request)
 ```
 </details>
 <img width="1237" alt="게시글 작성" src="https://github.com/jonique98/spring-react/assets/104954561/abff9f4e-a5b5-438f-a0f2-438bf03c61d7">
+<img width="833" alt="스크린샷 2024-03-05 19 29 31" src="https://github.com/jonique98/spring-react/assets/104954561/e8e7ed2c-c78a-474a-bdb3-938b575e25cc">
 
 
 ## 게시글 조회
