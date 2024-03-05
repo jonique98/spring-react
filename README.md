@@ -176,7 +176,9 @@ public ResponseEntity<? super SignUpResponseDto> signUp(
 	}
 ```
 </details>
-<img>
+<img width="695" alt="회원가입" src="https://github.com/jonique98/spring-react/assets/104954561/85870e0d-10e4-42ed-9d7e-bdbff8ea8659">
+<img width="736" alt="회원가입 실패" src="https://github.com/jonique98/spring-react/assets/104954561/0d6c0842-ed07-4077-a88b-b4824a09b283">
+
 
 ## 로그인
 #### url : /sign-in
@@ -259,7 +261,7 @@ Http Status - 500 (Internal Server Error)
 	}
 ```
 </details>
-<img>
+<img width="906" alt="로그인" src="https://github.com/jonique98/spring-react/assets/104954561/8e8972c7-7ce2-4689-aaef-6cc4d97ddf10">
 
 ## 게시글 작성
 #### url : /board/write
@@ -335,7 +337,8 @@ Http Status - 400 (Bad Request)
 	}
 ```
 </details>
-<img>
+<img width="1237" alt="게시글 작성" src="https://github.com/jonique98/spring-react/assets/104954561/abff9f4e-a5b5-438f-a0f2-438bf03c61d7">
+
 
 ## 게시글 조회
 #### url : /board/detail/{boardNumber}
@@ -409,7 +412,7 @@ Http Status - 400 (Bad Request)
 	}
 ```
 </details>
-<img>
+<img width="880" alt="게시글 상세" src="https://github.com/jonique98/spring-react/assets/104954561/541c471b-fcb2-4f7b-a201-4a2a79b36ba5">
 
 
 
