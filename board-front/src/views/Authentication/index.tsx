@@ -20,6 +20,12 @@ export default function Authentication() {
 	//			state: 쿠키 상태 관리			//
 	const [cookies, setCookie] = useCookies();
 
+	useEffect(() => {
+		// 'accessToken' 쿠키의 변화를 감지하고 콘솔에 출력
+		console.log('accessToken has changed:', cookies.accessToken);
+	  }, [cookies.accessToken]); // 의존성 배열에 'accessToken' 쿠키의 현재 값을 넣음	
+
+
 	//			component: 로그인 카드 컴포넌트			//
 	const SignInCard = () => {
 
@@ -62,7 +68,6 @@ export default function Authentication() {
 
 			setCookie('accessToken', token, { expires, path: MAIN_PATH() });
 			navigator(MAIN_PATH());
-
 		}
 
 		//				event handler: 이메일 인풋 변경 이벤트 처리				//

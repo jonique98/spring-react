@@ -22,6 +22,7 @@ import com.sumjo.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.sumjo.boardback.dto.response.board.PostBoardResponseDto;
 import com.sumjo.boardback.dto.response.board.PostCommentResponseDto;
 import com.sumjo.boardback.dto.response.board.PutFavoriteResponseDto;
+import com.sumjo.boardback.dto.response.board.GetCommentListResponseDto;
 import com.sumjo.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,14 @@ public class BoardController {
 		@PathVariable("boardNumber") Integer boardNumber
 	) {
 		ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
+		return response;
+	}
+
+	@GetMapping("/{boardNumber}/comment-list")
+	public ResponseEntity<? super GetCommentListResponseDto> getCommentList(
+		@PathVariable("boardNumber") Integer boardNumber
+	) {
+		ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
 		return response;
 	}
 

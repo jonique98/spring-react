@@ -122,7 +122,7 @@ Http Status - 500 (Internal Server Error)
 </details>
 
 <details>
-<summary>AuthController</summary>
+<summary>signUp(AuthController)</summary>
 
 ```java
 private final AuthService authService;
@@ -138,7 +138,7 @@ public ResponseEntity<? super SignUpResponseDto> signUp(
 </details>
 
 <details>
-<summary>AuthService</summary>
+<summary>signUp(AuthService)</summary>
 
 ```java
 @Override
@@ -176,8 +176,9 @@ public ResponseEntity<? super SignUpResponseDto> signUp(
 	}
 ```
 </details>
-<img width="695" alt="회원가입" src="https://github.com/jonique98/spring-react/assets/104954561/85870e0d-10e4-42ed-9d7e-bdbff8ea8659">
-<img width="736" alt="회원가입 실패" src="https://github.com/jonique98/spring-react/assets/104954561/0d6c0842-ed07-4077-a88b-b4824a09b283">
+<img width="1440" alt="스크린샷 2024-03-17 00 11 28" src="https://github.com/jonique98/spring-react/assets/104954561/c8e9e60f-579a-44c9-83f0-64e0ca590c94">
+<img width="1440" alt="스크린샷 2024-03-17 00 11 33" src="https://github.com/jonique98/spring-react/assets/104954561/6625b423-cd0b-4df7-9e9f-d4033b8345f8">
+<img width="1440" alt="스크린샷 2024-03-17 00 12 39" src="https://github.com/jonique98/spring-react/assets/104954561/989bfbf1-bf4f-4802-b563-2caafd08cde0">
 
 
 ## 로그인
@@ -224,7 +225,7 @@ Http Status - 500 (Internal Server Error)
 
 
 <details>
-<summary>AuthController</summary>
+<summary>signIn(AuthController)</summary>
 
 ```java
 @PostMapping("/sign-in")
@@ -239,7 +240,7 @@ Http Status - 500 (Internal Server Error)
 </details>
 
 <details>
-<summary>AuthService</summary>
+<summary>signIn(AuthService)</summary>
 
 ```java
 @Override
@@ -261,7 +262,7 @@ Http Status - 500 (Internal Server Error)
 	}
 ```
 </details>
-<img width="906" alt="로그인" src="https://github.com/jonique98/spring-react/assets/104954561/8e8972c7-7ce2-4689-aaef-6cc4d97ddf10">
+<img width="1440" alt="스크린샷 2024-03-17 00 11 12" src="https://github.com/jonique98/spring-react/assets/104954561/531c76ed-773f-4fc8-8791-388b469912fc">
 
 ## 게시글 작성
 #### url : /board/write
@@ -302,7 +303,7 @@ Http Status - 400 (Bad Request)
 </details>
 
 <details>
-<summary>BoardController</summary>
+<summary>postBoard(BoardController)</summary>
 
 
 ```java
@@ -318,7 +319,7 @@ Http Status - 400 (Bad Request)
 </details>
 
 <details>
-<summary>BoardService</summary>
+<summary>postBoard(BoardService)</summary>
 
 ```java
 @Override
@@ -379,7 +380,7 @@ Http Status - 400 (Bad Request)
 </details>
 
 <details>
-<summary>BoardController</summary>
+<summary>getBoard(BoardController)</summary>
 
 ```java
 @GetMapping("/{boardNumber}")
@@ -394,7 +395,7 @@ Http Status - 400 (Bad Request)
 </details>
 
 <details>
-<summary>BoardService</summary>
+<summary>getBoard(BoardService)</summary>
 
 ```java
 @Override
@@ -413,7 +414,95 @@ Http Status - 400 (Bad Request)
 	}
 ```
 </details>
-<img width="880" alt="게시글 상세" src="https://github.com/jonique98/spring-react/assets/104954561/541c471b-fcb2-4f7b-a201-4a2a79b36ba5">
+<img width="425" alt="스크린샷 2024-03-17 00 15 20" src="https://github.com/jonique98/spring-react/assets/104954561/82eec903-e73b-4b14-a228-359b68af89fc">
+
+## 댓글 작성
+#### url : /board/detail/{boardNumber}
+#### Endpoint : api/v1/board/{boardNumber}/comment
+
+<details>
+<summary>명세</summary>
+
+```
+postComment(댓글 쓰기)
+
+- request
+{
+	*content: String
+}
+
+성공
+- response
+{
+	code: "SU",
+	message: "Success",
+}
+
+실패
+-데이터베이스 에러
+
+-존재하지 않는 게시물
+Http Status - 400 (Bad Request)
+{
+	code: "NB",
+	message: "Not Exsited Board Number"
+}
+
+-존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+	code: "NU",
+	message: "Not Exsited User"
+}
+```
+
+</details>
+
+<details>
+<summary>postComment(BoardController)</summary>
+
+```java
+@PostMapping("/{boardNumber}/comment")
+	public ResponseEntity<? super PostCommentResponseDto> postComment (
+		@PathVariable("boardNumber") Integer boardNumber,
+		@RequestBody @Valid PostCommentRequestDto requestBody,
+		@AuthenticationPrincipal String email
+	){
+		ResponseEntity<? super PostCommentResponseDto> response = boardService.postComment(boardNumber, requestBody, email);
+		return response;
+	}
+```
+
+</details>
+
+<details>
+<summary>postComment(BoardService)</summary>
+
+```java
+@Override
+	public ResponseEntity<? super PostCommentResponseDto> postComment(Integer boardNumber, PostCommentRequestDto dto, String email) {
+		try {
+			BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+			if(boardEntity == null) return PostCommentResponseDto.notExsitedBoard();
+
+			UserEntity userEntity = userRepository.findByEmail(email);
+			if(userEntity == null) return PostCommentResponseDto.notExsitedUser();
+
+			CommentEntity commentEntity = new CommentEntity(dto, userEntity, boardEntity);
+			commentRepository.save(commentEntity);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return ResponseDto.databaseError();
+		}
+		return PostCommentResponseDto.success();
+	}
+```
+</details>
+
+<img width="714" alt="스크린샷 2024-03-17 00 15 35" src="https://github.com/jonique98/spring-react/assets/104954561/d58abc0c-3613-411c-b1a8-1e25ed0a3bce">
+<img width="692" alt="스크린샷 2024-03-17 00 15 44" src="https://github.com/jonique98/spring-react/assets/104954561/9a9825c9-439e-49c9-b1bc-37de00d55621">
+<img width="686" alt="스크린샷 2024-03-17 00 16 55" src="https://github.com/jonique98/spring-react/assets/104954561/2f3cda00-457d-4024-9902-ff7333cdbf63">
+
 
 
 
